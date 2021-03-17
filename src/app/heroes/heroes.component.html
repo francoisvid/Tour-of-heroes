@@ -1,12 +1,29 @@
 <h2>My Heroes</h2>
 
 <div>
-  <label id="new-hero">Hero name: </label>
-  <input for="new-hero" #heroName />
 
+  <div class="form-group">
+    <label for="new-hero">Nom :</label>
+    <input id="new-hero" [(ngModel)]="heroName.name" #heroName />
+    <div [hidden]="heroName.name || heroPower.pristine" class="alert alert-danger">
+      Le pouvoir est requis
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label for="power">Pouvoir :</label>
+    <select class="form-control" id="power" required [(ngModel)]="model.power" name="power" #heroPower="ngModel">
+      <option *ngFor="let pow of powers" [value]="pow">{{pow}}</option>
+    </select>
+    <div [hidden]="heroPower.valid || heroPower.pristine" class="alert alert-danger">
+      Le pouvoir est requis
+    </div>
+
+  </div>
+  <br>
   <!-- (click) passes input value to add() and then clears the input -->
-  <button class="add-button" (click)="add(heroName.value); heroName.value=''">
-    Add hero
+  <button class="add-button" (click)="add(heroName.value, heroPower.value); heroName.value='' ">
+    Ajouter
   </button>
 </div>
 
@@ -16,6 +33,6 @@
       <span class="badge">{{hero.id}}</span> {{hero.name}}
     </a>
     <button class="delete" title="delete hero"
-            (click)="delete(hero)">x</button>
+            (click)="delete(hero)">X</button>
   </li>
 </ul>

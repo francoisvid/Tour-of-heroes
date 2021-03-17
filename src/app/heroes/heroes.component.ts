@@ -1,5 +1,4 @@
-import { Component, OnInit } from '@angular/core';
-
+import {Component, Input, OnInit} from '@angular/core';
 import { Hero } from "../hero";
 import { HeroService } from '../hero.service';
 
@@ -11,8 +10,14 @@ import { HeroService } from '../hero.service';
 
 export class HeroesComponent implements OnInit {
   heroes: Hero[];
+  @Input() hero?: Hero;
 
   constructor(private heroService: HeroService) { }
+
+  powers = ['Really Smart', 'Super Flexible',
+    'Super Hot', 'Weather Changer'];
+
+  model = new Hero(18, 'Dr IQ', this.powers[0], 'Chuck Overstreet');
 
   ngOnInit() {
     this.getHeroes();
@@ -23,13 +28,18 @@ export class HeroesComponent implements OnInit {
       .subscribe(heroes => this.heroes = heroes);
   }
 
-  add(name: string): void {
+  add(name: string, power: string): void {
     name = name.trim();
-    if (!name) { return; }
-    this.heroService.addHero({ name } as Hero)
-      .subscribe(hero => {
-        this.heroes.push(hero);
-      });
+    power = power.trim();
+    if (!name && !power) { return; }
+    if (name !== '' || power !== '') {
+      this.heroService.addHero({ name, power } as Hero)
+        .subscribe(hero => {
+          this.heroes.push(hero);
+        });
+    } else {
+      alert("null")
+    }
   }
 
   delete(hero: Hero): void {

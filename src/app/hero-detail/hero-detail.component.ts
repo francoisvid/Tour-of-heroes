@@ -19,6 +19,16 @@ export class HeroDetailComponent implements OnInit {
     private location: Location
   ) {}
 
+  powers = ['Really Smart', 'Super Flexible',
+    'Super Hot', 'Weather Changer'];
+
+  submitted = false;
+
+  onSubmit() { this.submitted = true; }
+
+  // TODO: Remove this when we're done
+  get diagnostic() { return JSON.stringify(this.hero); }
+
   ngOnInit(): void {
     this.getHero();
   }
@@ -35,7 +45,7 @@ export class HeroDetailComponent implements OnInit {
 
   save(): void {
     this.heroService.updateHero(this.hero)
-      .subscribe(() => this.goBack());
+        .subscribe(() => this.goBack());
   }
 
 }

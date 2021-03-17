@@ -1,10 +1,32 @@
 <div *ngIf="hero">
-  <h2>{{ hero.name | uppercase }} Details</h2>
-  <div><span>id: </span>{{ hero.id }}</div>
+  <h2>{{ hero.name | uppercase }} Details => <span>id: </span>{{ hero.id }}</h2>
   <div>
-    <label for="hero-name">Hero name : </label>
-    <input id="hero-name" [(ngModel)]="hero.name" placeholder="name">
+    <label for="hero-name">Nom : </label>
+    <input id="hero-name" class="form-control" required [(ngModel)]="hero.name" placeholder="name" #name="ngModel">
+    <div [hidden]="name.valid || name.pristine" class="alert alert-danger">
+      Le nom est requis
+    </div>
   </div>
-  <button (click)="goBack()">go back</button>&nbsp;
-  <button (click)="save()">save</button>
+</div><br>
+
+<div class="form-group">
+  <label for="alterEgo">Alter Ego : </label>
+  <input type="text" class="form-control" id="alterEgo" [(ngModel)]="hero.alterEgo" name="alterEgo">
+</div><br>
+
+<div class="form-group">
+  <label for="power">Pouvoir : </label>
+  <select class="form-control" id="power" required [(ngModel)]="hero.power" name="power" #power="ngModel">
+    <option *ngFor="let pow of powers" [value]="pow">{{pow}}</option>
+  </select>
+  <div [hidden]="power.valid || power.pristine" class="alert alert-danger">
+    Le pouvoir est requis
+  </div>
+</div><br>
+
+<div class="content-btn">
+  <button class="back" (click)="goBack()">Retour</button>&nbsp;
+  <button class="save" (click)="save()">Sauvegarder</button>
 </div>
+<!--<button type="submit" class="btn btn-success" [disabled]="!heroForm.form.valid">Submit</button>-->
+<!--<button type="button" class="btn btn-default" (click)="newHero(); heroForm.reset()">New Hero</button>-->

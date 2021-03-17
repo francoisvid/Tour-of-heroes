@@ -1,0 +1,7 @@
+select {
+  width: 150px;
+}
+
+select option {
+  color: white !important;
+}
